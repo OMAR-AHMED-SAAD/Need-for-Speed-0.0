@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6c45f8fb-d770-4f7d-b3c8-da1caae30faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{20bcb72d-7769-48b8-ab13-db35047ab7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7202bdcb-f5fd-45ba-a360-d78d8317aa29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Main">
+      <UniqueIdentifier>{3a75f683-f8c0-4746-8abb-8ed7fad2d5a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Main Modules">
+      <UniqueIdentifier>{6fa0cfc1-1cc9-4062-b9d7-ae53fd42f1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Main Modules">
+      <UniqueIdentifier>{6559856b-550d-449a-9fd0-e69cba51b6cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Modules">
+      <UniqueIdentifier>{018f7d81-7a62-4a4a-8d7d-014331854ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{00b02380-120d-46e5-a463-14d5f903ca62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{9c1bd9aa-4c70-4a00-8de3-a23c440565cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Headers">
+      <UniqueIdentifier>{29bc8ffc-2d91-4009-9060-48d9bd2f3909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Modules">
+      <UniqueIdentifier>{a385ade0-49f1-4982-8d03-ec0c004975ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files\Game Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Model_3DS.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLTexture.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Main Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3f.cpp">
+      <Filter>Source Files\Main Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Game Modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Main Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTexture.h">
+      <Filter>Resource Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Model_3DS.h">
+      <Filter>Resource Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3f.h">
+      <Filter>Header Files\Main Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
