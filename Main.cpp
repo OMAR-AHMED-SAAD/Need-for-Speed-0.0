@@ -4,6 +4,7 @@
 #include "Vector3f.h"
 #include "Camera.h"
 #include "Scene.h"
+#include "Car.h"
 
 #define GLUT_KEY_ESCAPE 27
 
@@ -263,7 +264,7 @@ void reshape(int w, int h)
 void LoadAssets() {
 	// Loading Model files
 	//model_house.Load("Models/star/star.3ds");
-	model_tree.Load("Models/HwRoad.3ds");
+	loadCar();
 
 	// Loading texture files
 	loadSceneTextures();
@@ -283,16 +284,17 @@ void myDisplay(void)
 	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
 
 
-	//drawScene();
-	for (int i = -120; i <= 120; i += 2) {
-	// Draw Tree Model
-	glPushMatrix();
-	glTranslatef(0, 0, i);
-	glScalef(0.1, 0.1, 0.1);
-	model_tree.Draw();
-	glPopMatrix();
-	}
+	////drawScene();
+	//for (int i = -120; i <= 120; i += 2) {
+	//// Draw Tree Model
+	//glPushMatrix();
+	//glTranslatef(0, 0, i);
+	//glScalef(0.1, 0.1, 0.1);
+	//model_tree.Draw();
+	//glPopMatrix();
+	//}
 
+	renderCar();
 
 
 	renderSkyBox();
