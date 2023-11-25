@@ -88,6 +88,7 @@
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="Model_3DS.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Road.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="Vector3f.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Model_3DS.h" />
+    <ClInclude Include="Road.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector3f.h" />

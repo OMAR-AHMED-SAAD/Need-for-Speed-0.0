@@ -44,12 +44,12 @@ void renderSkyBox(void) {
 
 	GLUquadricObj* qobj;
 	qobj = gluNewQuadric();
-	glTranslated(50, 0, 0);
+
 	glRotated(90, 1, 0, 1);
 	glBindTexture(GL_TEXTURE_2D, skyTex);
 	gluQuadricTexture(qobj, true);
 	gluQuadricNormals(qobj, GL_SMOOTH);
-	gluSphere(qobj, 200, 100, 100);
+	gluSphere(qobj, 800, 100, 100);
 	gluDeleteQuadric(qobj);
 
 	glPopMatrix();

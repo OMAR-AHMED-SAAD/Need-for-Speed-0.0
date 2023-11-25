@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Car.h"
+#include "Road.h"
 
 #define GLUT_KEY_ESCAPE 27
 
@@ -265,6 +266,7 @@ void LoadAssets() {
 	// Loading Model files
 	//model_house.Load("Models/star/star.3ds");
 	loadCar();
+	loadRoad();
 
 	// Loading texture files
 	loadSceneTextures();
@@ -283,21 +285,30 @@ void myDisplay(void)
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
 
-
 	////drawScene();
-	//for (int i = -120; i <= 120; i += 2) {
-	//// Draw Tree Model
-	//glPushMatrix();
-	//glTranslatef(0, 0, i);
-	//glScalef(0.1, 0.1, 0.1);
-	//model_tree.Draw();
-	//glPopMatrix();
-	//}
+	renderRoad(240);
 
 	renderCar();
 
+	//draw point at the origin
+glPointSize(5);
+glColor3f(1,0, 0);
+glBegin(GL_POINTS);
+glVertex3f(0, 0, 0);
+glEnd();
 
-	renderSkyBox();
+//draw line to measure car length
+//glLineWidth(5);
+//glColor3f(1, 0, 0);
+//glBegin(GL_LINES);
+//glVertex3f(0, 0, -1);
+//glVertex3f(0, 0, -3);
+//glEnd();
+
+
+glColor3f(1, 1, 1);
+		
+		renderSkyBox();
 
 	//// Draw house Model
 	//glPushMatrix();
