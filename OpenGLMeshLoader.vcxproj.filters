@@ -66,6 +66,18 @@
     <ClCompile Include="Road.cpp">
       <Filter>Source Files\Game Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Cone.cpp">
+      <Filter>Source Files\Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>Source Files\Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Cup.cpp">
+      <Filter>Source Files\Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>Source Files\Game Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -90,6 +102,18 @@
       <Filter>Header Files\Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Road.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Cone.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Cup.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.h">
       <Filter>Header Files\Game Modules</Filter>
     </ClInclude>
   </ItemGroup>

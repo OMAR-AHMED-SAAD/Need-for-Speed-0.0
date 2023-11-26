@@ -6,7 +6,10 @@
 #include "Scene.h"
 #include "Car.h"
 #include "Road.h"
-
+#include "Cone.h"
+#include "Star.h"
+#include "Cup.h"
+#include "Barrier.h"
 #define GLUT_KEY_ESCAPE 27
 
 //Window Size and title
@@ -164,7 +167,7 @@ void keyboard(unsigned char key, int x, int y) {
 		exit(EXIT_SUCCESS);
 		break;
 	}
-
+	moveCar(key, x, y);
 	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glutPostRedisplay();
@@ -190,6 +193,7 @@ void special(int key, int x, int y) {
 		camera.rotateY(-a);
 		break;
 	}
+	
 
 	glutPostRedisplay();
 }
@@ -267,9 +271,32 @@ void LoadAssets() {
 	//model_house.Load("Models/star/star.3ds");
 	loadCar();
 	loadRoad();
-
+	loadCone();
+	loadStar();
+	loadCup();
+	loadBarrier();
 	// Loading texture files
 	loadSceneTextures();
+}
+void drawAxes(float length) {
+	glBegin(GL_LINES);
+
+	// X axis in red
+	glColor3f(1.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(length, 0.0, 0.0);
+
+	// Y axis in green
+	glColor3f(0.0, 1.0, 0.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, length, 0.0);
+
+	// Z axis in blue
+	glColor3f(0.0, 0.0, 1.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, length);
+
+	glEnd();
 }
 
 //=======================================================================
@@ -289,8 +316,12 @@ void myDisplay(void)
 	renderRoad(240);
 
 	renderCar();
-
+	//renderCone();
+	//renderStar();
+	//renderCup();
+	//renderBarrier();
 	//draw point at the origin
+	drawAxes(30);
 glPointSize(5);
 glColor3f(1,0, 0);
 glBegin(GL_POINTS);
