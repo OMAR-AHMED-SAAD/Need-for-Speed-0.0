@@ -31,11 +31,6 @@ Vector3f Up(0, 1, 0);
 
 Camera camera;
 
-// Model Variables
-Model_3DS model_house;
-Model_3DS model_tree;
-
-
 
 //=======================================================================
 // Lighting Configuration Function
@@ -141,9 +136,10 @@ void updateCamera() {
 //=======================================================================
 // Keyboard Function - Updated for Camera Control
 //=======================================================================
+bool isFirst = false;
 void keyboard(unsigned char key, int x, int y) {
 	float d = 1.0;
-
+	
 	switch (key) {
 	case 'w':
 		camera.moveY(d);
@@ -163,13 +159,22 @@ void keyboard(unsigned char key, int x, int y) {
 	case 'e':
 		camera.moveZ(-d);
 		break;
+	case 't':
+		isFirst = false;
+		//camera = Camera(Vector3f(0, car_y + 2, car_z+2), Vector3f(0, car_y, car_z - 5), Vector3f(0, 1, 0));
+		break;
+	case 'f':
+		isFirst = true;
+	//	camera = Camera(Vector3f(0, car_y + 3, car_z + 5), Vector3f(0, car_y, car_z - 5), Vector3f(0, 1, 0));
+		break;
+
 	case GLUT_KEY_ESCAPE:
 		exit(EXIT_SUCCESS);
 		break;
 	}
-	moveCar(key, x, y);
-	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	moveCar(key, x, y, camera,isFirst);
+	/*GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);*/
 	glutPostRedisplay();
 }
 
@@ -304,7 +309,7 @@ void drawAxes(float length) {
 //=======================================================================
 void myDisplay(void)
 {
-	updateCamera();
+		updateCamera();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	GLfloat lightIntensity[] = { 0.7, 0.7, 0.7, 1.0f };
@@ -322,11 +327,11 @@ void myDisplay(void)
 	//renderBarrier();
 	//draw point at the origin
 	drawAxes(30);
-glPointSize(5);
-glColor3f(1,0, 0);
-glBegin(GL_POINTS);
-glVertex3f(0, 0, 0);
-glEnd();
+	glPointSize(5);
+	glColor3f(1,0, 0);
+	glBegin(GL_POINTS);
+	glVertex3f(0, 0, 0);
+	glEnd();
 
 //draw line to measure car length
 //glLineWidth(5);
@@ -337,15 +342,16 @@ glEnd();
 //glEnd();
 
 
-glColor3f(1, 1, 1);
+	glColor3f(1, 1, 1);
 		
-		renderSkyBox();
+	renderSkyBox();
 
 	//// Draw house Model
 	//glPushMatrix();
 	//glRotatef(90.f, 1, 0, 0);
 	//model_house.Draw();
 	//glPopMatrix();
+
 
 	glutSwapBuffers();
 }
