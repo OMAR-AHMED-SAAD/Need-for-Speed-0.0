@@ -17,6 +17,8 @@ int HEIGHT = 720;
 int WIDTH = 1080;
 char title[] = "Need for speed 0.0";
 
+// Instance Variable
+int score = 0;
 
 // 3D Projection Options
 GLdouble fovy = 45.0;
@@ -159,20 +161,24 @@ void keyboard(unsigned char key, int x, int y) {
 	case 'e':
 		camera.moveZ(-d);
 		break;
-	case 't':
-		isFirst = false;
-		//camera = Camera(Vector3f(0, car_y + 2, car_z+2), Vector3f(0, car_y, car_z - 5), Vector3f(0, 1, 0));
+	case 'i':
+		camera.rotateX(d);
 		break;
-	case 'f':
-		isFirst = true;
-	//	camera = Camera(Vector3f(0, car_y + 3, car_z + 5), Vector3f(0, car_y, car_z - 5), Vector3f(0, 1, 0));
+	case 'k':
+		camera.rotateX(-d);
+		break;
+	case 'j':
+		camera.rotateY(d);
+		break;
+	case 'l':
+		camera.rotateY(-d);
 		break;
 
 	case GLUT_KEY_ESCAPE:
 		exit(EXIT_SUCCESS);
 		break;
 	}
-	moveCar(key, x, y, camera,isFirst);
+	
 	/*GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);*/
 	glutPostRedisplay();
@@ -181,25 +187,8 @@ void keyboard(unsigned char key, int x, int y) {
 //=======================================================================
 // Special Function - Updated for Camera Control
 //=======================================================================
-void special(int key, int x, int y) {
-	float a = 3.0;
-
-	switch (key) {
-	case GLUT_KEY_UP:
-		camera.rotateX(a);
-		break;
-	case GLUT_KEY_DOWN:
-		camera.rotateX(-a);
-		break;
-	case GLUT_KEY_LEFT:
-		camera.rotateY(a);
-		break;
-	case GLUT_KEY_RIGHT:
-		camera.rotateY(-a);
-		break;
-	}
-	
-
+void special(int key, int x, int y) {	
+	moveCar(key, camera, isFirst);
 	glutPostRedisplay();
 }
 
@@ -232,11 +221,13 @@ void mouseMotion(int x, int y) {
 // Mouse Function
 //=======================================================================
 void mouse(int button, int state, int x, int y) {
-	if (state == GLUT_DOWN) {
-		// Store the initial mouse position when a button is pressed
-		prevX = x;
-		prevY = y;
-	}
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) 
+		isFirst = true;
+	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) 
+		isFirst = false;
+	
+	moveCar(NULL, camera, isFirst);
+	glutPostRedisplay();
 }
 
 //=======================================================================
@@ -304,22 +295,44 @@ void drawAxes(float length) {
 	glEnd();
 }
 
+void print(){
+	glPushAttrib(GL_CURRENT_BIT);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, 800, 0, 600);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	char scoreString[20];
+	sprintf(scoreString, "Score: %d", score);
+	glColor3f(1.0, 0.0, 0.0);
+	glRasterPos2i(720, 580);
+	for (char* c = scoreString; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+	}
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopAttrib();
+}
+
 //=======================================================================
 // Display Function
 //=======================================================================
 void myDisplay(void)
 {
-		updateCamera();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	updateCamera();
 	GLfloat lightIntensity[] = { 0.7, 0.7, 0.7, 1.0f };
 	GLfloat lightPosition[] = { 0.0f, 100.0f, 0.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
-
 	////drawScene();
 	renderRoad(240);
-
 	renderCar();
 	//renderCone();
 	//renderStar();
@@ -327,32 +340,9 @@ void myDisplay(void)
 	//renderBarrier();
 	//draw point at the origin
 	drawAxes(30);
-	glPointSize(5);
-	glColor3f(1,0, 0);
-	glBegin(GL_POINTS);
-	glVertex3f(0, 0, 0);
-	glEnd();
-
-//draw line to measure car length
-//glLineWidth(5);
-//glColor3f(1, 0, 0);
-//glBegin(GL_LINES);
-//glVertex3f(0, 0, -1);
-//glVertex3f(0, 0, -3);
-//glEnd();
-
-
 	glColor3f(1, 1, 1);
-		
 	renderSkyBox();
-
-	//// Draw house Model
-	//glPushMatrix();
-	//glRotatef(90.f, 1, 0, 0);
-	//model_house.Draw();
-	//glPopMatrix();
-
-
+	print();
 	glutSwapBuffers();
 }
 
@@ -378,7 +368,7 @@ void main(int argc, char** argv)
 	glutSpecialFunc(special);
 
 	glutMouseFunc(mouse);
-	glutMotionFunc(mouseMotion);
+	//glutMotionFunc(mouseMotion);
 
 	glutReshapeFunc(reshape);
 

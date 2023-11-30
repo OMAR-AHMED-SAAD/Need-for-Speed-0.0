@@ -8,6 +8,6 @@ static int car_z = 0;
 
 void loadCar();
 void renderCar();
-void moveCar(unsigned char key, int x, int y,Camera& camera, bool isFirst);
+void moveCar(unsigned char key,Camera& camera, bool isFirst);
 
 #endif // CAR_H

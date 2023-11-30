@@ -34,7 +34,7 @@
     <Filter Include="Resource Headers">
       <UniqueIdentifier>{29bc8ffc-2d91-4009-9060-48d9bd2f3909}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game Modules">
+    <Filter Include="Source Files\Game Models">
       <UniqueIdentifier>{a385ade0-49f1-4982-8d03-ec0c004975ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -58,25 +58,25 @@
       <Filter>Source Files\Main Modules</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
     <ClCompile Include="Road.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
     <ClCompile Include="Cone.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
     <ClCompile Include="Star.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
     <ClCompile Include="Cup.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
     <ClCompile Include="Barrier.cpp">
-      <Filter>Source Files\Game Modules</Filter>
+      <Filter>Source Files\Game Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

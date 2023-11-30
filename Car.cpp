@@ -20,18 +20,19 @@ void renderCar() {
     glPopMatrix();
 }
 
-void moveCar(unsigned char key, int x, int y, Camera& camera, bool isFirst) {
+void moveCar(unsigned char key, Camera& camera, bool isFirst) {
+
     switch (key) {
-    case 'j': case 'J':
+    case GLUT_KEY_LEFT:
         car_x -= speed_car; // Move left
         break;
-    case 'l': case 'L':
+    case GLUT_KEY_RIGHT:
         car_x += speed_car; // Move right
         break;
-    case 'i': case 'I':
+    case GLUT_KEY_UP:
         car_z -= speed_car; // Move forward
         break;
-    case 'k': case 'K':
+    case GLUT_KEY_DOWN:
         car_z += speed_car; // Move backward
         break;
     }
