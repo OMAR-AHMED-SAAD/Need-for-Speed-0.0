@@ -3,6 +3,7 @@
 #include "Car.h"
 #include "Model_3DS.h"
 #include "glut.h"
+#include <algorithm>
 Model_3DS model_car;
 
 int speed_car = 1;
@@ -25,9 +26,11 @@ void moveCar(unsigned char key, Camera& camera, bool isFirst) {
     switch (key) {
     case GLUT_KEY_LEFT:
         car_x -= speed_car; // Move left
+        car_x = car_x >= -3 ? car_x : -3;
         break;
     case GLUT_KEY_RIGHT:
         car_x += speed_car; // Move right
+        car_x = car_x <= 3 ? car_x : 3;
         break;
     case GLUT_KEY_UP:
         car_z -= speed_car; // Move forward

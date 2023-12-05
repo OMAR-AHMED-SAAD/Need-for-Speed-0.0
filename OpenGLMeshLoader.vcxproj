@@ -86,6 +86,7 @@
     <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Cone.cpp" />
     <ClCompile Include="Cup.cpp" />
     <ClCompile Include="GLTexture.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="Barrier.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Cone.h" />
     <ClInclude Include="Cup.h" />
     <ClInclude Include="GLTexture.h" />

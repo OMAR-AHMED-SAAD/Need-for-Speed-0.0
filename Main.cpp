@@ -10,6 +10,7 @@
 #include "Star.h"
 #include "Cup.h"
 #include "Barrier.h"
+#include "Coin.h"
 #define GLUT_KEY_ESCAPE 27
 
 //Window Size and title
@@ -271,6 +272,7 @@ void LoadAssets() {
 	loadStar();
 	loadCup();
 	loadBarrier();
+	loadCoin();
 	// Loading texture files
 	loadSceneTextures();
 }
@@ -337,7 +339,8 @@ void myDisplay(void)
 	//renderCone();
 	//renderStar();
 	//renderCup();
-	//renderBarrier();
+	renderBarrier();
+	renderCoin();
 	//draw point at the origin
 	drawAxes(30);
 	glColor3f(1, 1, 1);
