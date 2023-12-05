@@ -32,7 +32,7 @@ void renderCoin(float translate_x, float translate_y, float translate_z) {
 void renderCoins() {
     for (int i = 0; i < 5; i++) {
         //printf("Coin %d: %d\n", i, coin_collected[i]);
-        if (coin_collected[i]==false) {
+        if (!coin_collected[i]) {
 		    renderCoin(coin_coords[i][0], coin_coords[i][1], coin_coords[i][2]);
         }
 	}

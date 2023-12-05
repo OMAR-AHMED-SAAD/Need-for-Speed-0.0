@@ -2,6 +2,9 @@
 #include "Camera.h"
 #include "Coin.h"
 #include "Barrier.h"
+#include "Star.h"
+#include "Cone.h"
+#include "Cup.h"
 #ifndef CAR_H
 #define CAR_H
 static int car_x = 0;
@@ -15,4 +18,8 @@ float euclideanDistance(float x1, float y1, float z1, float x2, float y2, float 
 void collideWithCoins(int* score);
 bool collideWithBarrierZ();
 bool collideWithBarrierX();
+void collideWithStars(int* score);
+bool collideWithConeZ();
+bool collideWithConeX();
+void collideWithCup();
 #endif // CAR_H

@@ -337,15 +337,17 @@ void myDisplay(void)
 	////drawScene();
 	renderRoad(240);
 	renderCar();
-	//renderCone();
-	//renderStar();
-	//renderCup();
+	//scene 1
 	renderBarriers();
-
 	collideWithCoins(&score);
 	renderCoins();
-
 	renderDoor();
+	// scene 2
+	collideWithStars(&score);
+	renderStars();
+	renderCones();
+	collideWithCup();
+	renderCup();
 	//draw point at the origin
 	drawAxes(30);
 	glColor3f(1, 1, 1);
