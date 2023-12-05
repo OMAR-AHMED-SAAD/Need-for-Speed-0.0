@@ -81,6 +81,9 @@
     <ClCompile Include="Coin.cpp">
       <Filter>Source Files\Game Models</Filter>
     </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Source Files\Game Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -120,6 +123,9 @@
       <Filter>Header Files\Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
       <Filter>Header Files\Game Modules</Filter>
     </ClInclude>
   </ItemGroup>

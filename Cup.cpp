@@ -11,10 +11,10 @@ void loadCup() {
 }
 
 void renderCup() {
-    glPushMatrix();
+    glPushMatrix();    
+    glTranslatef(0, 0, 0);
     glRotated(90, 0, 1, 0);
     glScaled(5, 5, 5);
-    glTranslatef(0, 0, 0);
     model_cup.Draw();
     glPopMatrix();
 }

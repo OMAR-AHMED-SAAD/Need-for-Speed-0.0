@@ -11,6 +11,7 @@
 #include "Cup.h"
 #include "Barrier.h"
 #include "Coin.h"
+#include "Door.h"
 #define GLUT_KEY_ESCAPE 27
 
 //Window Size and title
@@ -339,8 +340,12 @@ void myDisplay(void)
 	//renderCone();
 	//renderStar();
 	//renderCup();
-	renderBarrier();
-	renderCoin();
+	renderBarriers();
+
+	collideWithCoins(&score);
+	renderCoins();
+
+	renderDoor();
 	//draw point at the origin
 	drawAxes(30);
 	glColor3f(1, 1, 1);
