@@ -2,7 +2,6 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "GLTexture.h"  // Include necessary headers, such as GLTexture.h
 
 // Declare the function to render the ground
 void renderGround();

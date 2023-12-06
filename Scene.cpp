@@ -63,6 +63,7 @@ void loadSceneTextures()
 }
 
 void drawScene()
-{
+{	
+	renderSkyBox();
 	renderGround();
 }

@@ -6,7 +6,7 @@
 
 Model_3DS model_cup;
 
-float cup_coords[3] = { 0.0f, 0.5f, -270.0f };
+float cup_coords[3] = { 0.0f, 0.0f, -270.0f };
 bool cup_collected = false;
 void loadCup() {
     model_cup.Load("Models/cup/kelch12_lowpolyn2.3ds");

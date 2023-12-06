@@ -1,3 +1,5 @@
+#include <Windows.h>
+#include <mmsystem.h>
 #include "Model_3DS.h"
 #include "GLTexture.h"
 #include <glut.h>
@@ -5,13 +7,14 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Car.h"
-#include "Road.h"
+#include "Road.h" 
 #include "Cone.h"
 #include "Star.h"
 #include "Cup.h"
 #include "Barrier.h"
 #include "Coin.h"
 #include "Door.h"
+#pragma comment(lib, "winmm.lib")
 #define GLUT_KEY_ESCAPE 27
 
 //Window Size and title
@@ -39,31 +42,65 @@ Camera camera;
 //=======================================================================
 // Lighting Configuration Function
 //=======================================================================
-void InitLightSource()
-{
-	// Enable Lighting for this OpenGL Program
-	glEnable(GL_LIGHTING);
+void InitLightSource() {
+	//print level2 value 
+	printf("level2: %d\n", level2);
+	float ambientRedIntensity = level2? 0.0 : 0.3;
+	float ambientBlueIntensity = level2 ? 0.7 : 0.0;
 
-	// Enable Light Source number 0
-	// OpengL has 8 light sources
-	glEnable(GL_LIGHT0);
+	// Set global ambient light (affects all objects)
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	GLfloat lmodel_ambient[] = { ambientRedIntensity, 0.0f, ambientBlueIntensity, 1.0f }; // Ambient light for the entire scene
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
 
-	// Define Light source 0 ambient light
-	GLfloat ambient[] = { 0.1f, 0.1f, 0.1, 1.0f };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	// Define Light source 0 diffuse light as red
+	GLfloat l0Diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f }; // Red diffuse light
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0Diffuse);
 
-	// Define Light source 0 diffuse light
-	GLfloat diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	// Define Light source 0 ambient light as a subtle red
+	GLfloat l0Ambient[] = {ambientRedIntensity, 0.0f,ambientBlueIntensity, 1.0f }; // Subtle red ambient light
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l0Ambient);
 
-	// Define Light source 0 Specular light
-	GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 
-	// Finally, define light source 0 position in World Space
-	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	// Set light source 0 position in World Space (adjust as needed)
+	GLfloat l0Position[] = { 0.0f, 800.0f, 0.0f, 1.0f }; // Position of the light
+	glLightfv(GL_LIGHT0, GL_POSITION, l0Position);
+
+	//increase red intensity
+	GLfloat Intensity[] = { ambientRedIntensity, 0.0, ambientBlueIntensity, 1.0f };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, Intensity);
+
+	GLfloat l0Direction[] = { 0.0f, 0.0f, 0.0f }; // No direction for a point light
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, l0Direction);
 }
+
+void InitSpotLightSource() {
+	// Define Light source 1 (Green high-intensity spotlight)
+	GLfloat l1Diffuse[] = { 0.0f, 1.0f, 0.0f, 1.0f }; // Green diffuse light
+	GLfloat l1Specular[] = { 0.0f, 1.0f, 0.0f, 1.0f }; // Green specular light
+	GLfloat l1Position[] = { car_x, 6.0f, car_z, 1.0f }; // Position at (0, 15, 0)
+
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, l1Diffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, l1Specular);
+	glLightfv(GL_LIGHT1, GL_POSITION, l1Position);
+
+	//increase red intensity
+	GLfloat Intensity[] = { 0, 1.0, 0, 1.0f };
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, Intensity);
+
+	// Set spotlight properties for Light source 1 (GL_LIGHT1)
+	GLfloat spotDirection[] = { 0.0f, -1.0f, 0.0f }; // Spotlight direction (pointing downwards)
+	GLfloat spotExponent = 90.0f; // Adjust spotlight exponent for intensity
+	GLfloat spotCutoff = 60.0f; // Set the cutoff angle to 180 degrees for a circular shape
+
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirection);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, spotExponent);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, spotCutoff);
+}
+
+
+
+
 
 //=======================================================================
 // Material Configuration Function
@@ -135,6 +172,9 @@ void updateCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	camera.look();
+	InitLightSource();
+	InitSpotLightSource();	
+
 }
 
 //=======================================================================
@@ -276,6 +316,7 @@ void LoadAssets() {
 	loadCoin();
 	// Loading texture files
 	loadSceneTextures();
+	loadDoorTexture();
 }
 void drawAxes(float length) {
 	glBegin(GL_LINES);
@@ -348,6 +389,7 @@ void myDisplay(void)
 	renderCones();
 	collideWithCup();
 	renderCup();
+	collidWithDoor(score);
 	//draw point at the origin
 	drawAxes(30);
 	glColor3f(1, 1, 1);
@@ -388,10 +430,13 @@ void main(int argc, char** argv)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
 	glShadeModel(GL_SMOOTH);
+
+	
 
 	glutMainLoop();
 }

@@ -7,9 +7,11 @@
 #include "Cup.h"
 #ifndef CAR_H
 #define CAR_H
-static int car_x = 0;
-static int car_y = 0;
-static int car_z = 0;
+extern int car_x;
+extern int car_y;
+extern int car_z;
+static bool goLevel2 = true;
+extern bool level2;
 
 void loadCar();
 void renderCar();
@@ -22,4 +24,5 @@ void collideWithStars(int* score);
 bool collideWithConeZ();
 bool collideWithConeX();
 void collideWithCup();
+void collidWithDoor(int score);
 #endif // CAR_H
