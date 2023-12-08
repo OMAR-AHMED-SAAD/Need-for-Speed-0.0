@@ -87,7 +87,50 @@ void showWinScreen() {
 	glutSwapBuffers();
 }
 
+void showLoseScreen() {
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Disable depth test to ensure the win screen appears on top
+	glDisable(GL_DEPTH_TEST);
+
+
+	glClearColor(0.537f, 0.812f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, WIDTH, 0, HEIGHT);
+
+	// Initialize modelview matrix
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+
+	const char* loseText = "You Lost";
+	glColor3f(1.0, 1.0, 0.0); // Yellow text color
+	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)loseText);
+	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
+	for (const char* c = loseText; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+	}
+
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glEnable(GL_DEPTH_TEST);
+
+	// Swap the buffers to display the win screen
+	glutSwapBuffers();
+}
 
 
 
@@ -458,8 +501,8 @@ void myDisplay(void)
 		break;
 
 	case LOSE:
-		// Optionally handle a lose state
-		// showLoseScreen(); // Implement this if you have a lose screen
+		
+		showLoseScreen(); 
 
 		break;
 	}
