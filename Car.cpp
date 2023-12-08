@@ -167,6 +167,7 @@ void collideWithCup() {
 	if (dist <= 1.1 && !cup_collected) {
 		PlaySound(TEXT("sounds/win.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		cup_collected = true;
+		currentGameState = WIN;
 	}
 }
 

@@ -14,9 +14,13 @@
 #include "Barrier.h"
 #include "Coin.h"
 #include "Door.h"
+#include <cmath>
 #pragma comment(lib, "winmm.lib")
 #define GLUT_KEY_ESCAPE 27
-
+// Define M_PI if it's not already defined
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 //Window Size and title
 int HEIGHT = 720;
 int WIDTH = 1080;
@@ -24,7 +28,7 @@ char title[] = "Need for speed 0.0";
 
 // Instance Variable
 int score = 0;
-
+GameState currentGameState = PLAYING;
 // 3D Projection Options
 GLdouble fovy = 45.0;
 GLdouble aspectRatio = (GLdouble)WIDTH / (GLdouble)HEIGHT;
@@ -36,7 +40,55 @@ Vector3f Eye(20, 10, 20);
 Vector3f At(0, 0, 0);
 Vector3f Up(0, 1, 0);
 
+
 Camera camera;
+void showWinScreen() {
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Disable depth test to ensure the win screen appears on top
+	glDisable(GL_DEPTH_TEST);
+
+	
+	glClearColor(0.537f, 0.812f, 0.941f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT); 
+
+	
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, WIDTH, 0, HEIGHT);
+
+	// Initialize modelview matrix
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	
+	const char* winText = "Congratulations! You Win!";
+	glColor3f(1.0, 1.0, 0.0); // Yellow text color
+	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)winText);
+	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
+	for (const char* c = winText; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+	}
+
+	
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glEnable(GL_DEPTH_TEST);
+
+	// Swap the buffers to display the win screen
+	glutSwapBuffers();
+}
+
+
+
 
 
 //=======================================================================
@@ -373,28 +425,44 @@ void myDisplay(void)
 	updateCamera();
 	GLfloat lightIntensity[] = { 0.7, 0.7, 0.7, 1.0f };
 	GLfloat lightPosition[] = { 0.0f, 100.0f, 0.0f, 0.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
-	////drawScene();
-	renderRoad(240);
-	renderCar();
-	//scene 1
-	renderBarriers();
-	collideWithCoins(&score);
-	renderCoins();
-	renderDoor();
-	// scene 2
-	collideWithStars(&score);
-	renderStars();
-	renderCones();
-	collideWithCup();
-	renderCup();
-	collidWithDoor(score);
-	//draw point at the origin
-	drawAxes(30);
-	glColor3f(1, 1, 1);
-	renderSkyBox();
-	print();
+	switch (currentGameState) {
+		// Normal game rendering
+		
+	case PLAYING:
+		
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+		glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
+
+		renderRoad(240);
+		renderCar();
+		renderBarriers();
+		collideWithCoins(&score);
+		renderCoins();
+		renderDoor();
+		collideWithStars(&score);
+		renderStars();
+		renderCones();
+		collideWithCup();
+		renderCup();
+		collidWithDoor(score);
+
+		drawAxes(30);
+		glColor3f(1, 1, 1);
+		renderSkyBox();
+		print();
+		break;
+
+	case WIN:
+		showWinScreen();
+	
+		break;
+
+	case LOSE:
+		// Optionally handle a lose state
+		// showLoseScreen(); // Implement this if you have a lose screen
+
+		break;
+	}
 	glutSwapBuffers();
 }
 

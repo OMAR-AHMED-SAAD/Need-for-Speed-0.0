@@ -12,7 +12,13 @@ extern int car_y;
 extern int car_z;
 static bool goLevel2 = true;
 extern bool level2;
-
+//enum for tracking game state
+enum GameState {
+    PLAYING,
+    WIN,
+    LOSE
+};
+extern GameState currentGameState;
 void loadCar();
 void renderCar();
 void moveCar(unsigned char key,Camera& camera, bool isFirst);
