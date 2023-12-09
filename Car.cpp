@@ -163,11 +163,12 @@ bool collideWithConeX() {
 
 void collideWithCup() {
 	float dist = euclideanDistance(car_x, car_y, car_z, cup_coords[0], cup_coords[1], cup_coords[2]);
-	printf("Cup : %f\n", dist);
+	//printf("Cup : %f\n", dist);
 	if (dist <= 1.1 && !cup_collected) {
 		PlaySound(TEXT("sounds/win.wav"), NULL, SND_ASYNC | SND_FILENAME);
 		cup_collected = true;
 		currentGameState = WIN;
+		glutPostRedisplay();
 	}
 }
 
@@ -184,6 +185,8 @@ void collidWithDoor(int score) {
 		goLevel2 = false;
 		openDoor = 0;
 		openDoorAngle = 0;
+		currentGameState = LOSE;
+		glutPostRedisplay();
 	}
 	else {
 		goLevel2 = true;

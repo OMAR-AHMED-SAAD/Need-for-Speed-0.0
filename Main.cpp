@@ -84,7 +84,7 @@ void showWinScreen() {
 	glEnable(GL_DEPTH_TEST);
 
 	// Swap the buffers to display the win screen
-	glutSwapBuffers();
+	//glutSwapBuffers();
 }
 
 void showLoseScreen() {
@@ -95,7 +95,7 @@ void showLoseScreen() {
 	glDisable(GL_DEPTH_TEST);
 
 
-	glClearColor(0.537f, 0.812f, 0.0f, 1.0f);
+	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 
@@ -129,7 +129,7 @@ void showLoseScreen() {
 	glEnable(GL_DEPTH_TEST);
 
 	// Swap the buffers to display the win screen
-	glutSwapBuffers();
+	//glutSwapBuffers();
 }
 
 
@@ -173,7 +173,7 @@ void InitSpotLightSource() {
 	// Define Light source 1 (Green high-intensity spotlight)
 	GLfloat l1Diffuse[] = { 0.0f, 1.0f, 0.0f, 1.0f }; // Green diffuse light
 	GLfloat l1Specular[] = { 0.0f, 1.0f, 0.0f, 1.0f }; // Green specular light
-	GLfloat l1Position[] = { car_x, 6.0f, car_z, 1.0f }; // Position at (0, 15, 0)
+	GLfloat l1Position[] = { car_x, 4.0f, car_z, 1.0f }; // Position at (0, 15, 0)
 
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, l1Diffuse);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, l1Specular);
@@ -185,8 +185,8 @@ void InitSpotLightSource() {
 
 	// Set spotlight properties for Light source 1 (GL_LIGHT1)
 	GLfloat spotDirection[] = { 0.0f, -1.0f, 0.0f }; // Spotlight direction (pointing downwards)
-	GLfloat spotExponent = 90.0f; // Adjust spotlight exponent for intensity
-	GLfloat spotCutoff = 60.0f; // Set the cutoff angle to 180 degrees for a circular shape
+	GLfloat spotExponent = 120.0f; // Adjust spotlight exponent for intensity
+	GLfloat spotCutoff = 45.0f; // Set the cutoff angle to 180 degrees for a circular shape
 
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirection);
 	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, spotExponent);
@@ -472,7 +472,6 @@ void myDisplay(void)
 		// Normal game rendering
 		
 	case PLAYING:
-		
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 		glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
 
@@ -494,16 +493,11 @@ void myDisplay(void)
 		renderSkyBox();
 		print();
 		break;
-
 	case WIN:
 		showWinScreen();
-	
 		break;
-
 	case LOSE:
-		
 		showLoseScreen(); 
-
 		break;
 	}
 	glutSwapBuffers();
