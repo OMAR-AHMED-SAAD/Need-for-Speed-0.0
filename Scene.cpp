@@ -2,10 +2,12 @@
 #include "Scene.h"
 #include "GLTexture.h"
 #include "glut.h"
+#include "car.h"
 
 // Textures
 GLTexture tex_ground;
 GLuint skyTex;
+GLuint skyTex2;
 
 void renderGround()
 {
@@ -39,6 +41,25 @@ void renderGround()
 
 void renderSkyBox(void) {
 
+	if (level2)
+	{
+
+		//sky box
+		glPushMatrix();
+
+		GLUquadricObj* qobj;
+		qobj = gluNewQuadric();
+
+		glRotated(90, 1, 0, 1);
+		glBindTexture(GL_TEXTURE_2D, skyTex);
+		gluQuadricTexture(qobj, true);
+		gluQuadricNormals(qobj, GL_SMOOTH);
+		gluSphere(qobj, 800, 100, 100);
+		gluDeleteQuadric(qobj);
+
+		glPopMatrix();
+	}
+
 	//sky box
 	glPushMatrix();
 
@@ -46,7 +67,7 @@ void renderSkyBox(void) {
 	qobj = gluNewQuadric();
 
 	glRotated(90, 1, 0, 1);
-	glBindTexture(GL_TEXTURE_2D, skyTex);
+	glBindTexture(GL_TEXTURE_2D, skyTex2);
 	gluQuadricTexture(qobj, true);
 	gluQuadricNormals(qobj, GL_SMOOTH);
 	gluSphere(qobj, 800, 100, 100);
@@ -59,6 +80,7 @@ void loadSceneTextures()
 {
 	tex_ground.Load("Textures/ground.bmp"); // Load the ground texture.
 	loadBMP(&skyTex, "Textures/blu-sky-3.bmp", true);
+	loadBMP(&skyTex2, "Textures/Starbasesnow.bmp", true);
 
 }
 

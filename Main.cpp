@@ -15,6 +15,7 @@
 #include "Coin.h"
 #include "Door.h"
 #include <cmath>
+#include <string>
 #pragma comment(lib, "winmm.lib")
 #define GLUT_KEY_ESCAPE 27
 // Define M_PI if it's not already defined
@@ -65,13 +66,15 @@ void showWinScreen() {
 	glLoadIdentity();
 
 	
-	const char* winText = "Congratulations! You Win!";
-	glColor3f(1.0, 1.0, 0.0); // Yellow text color
-	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)winText);
-	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
-	for (const char* c = winText; *c != '\0'; c++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
-	}
+std::string winText = "Congratulations! You Win! Score: " + std::to_string(score);
+
+// Display the text
+glColor3f(1.0, 1.0, 0.0); // Yellow text color
+int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)winText.c_str());
+glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
+for (const char* c = winText.c_str(); *c != '\0'; c++) {
+    glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+}
 
 	
 	glMatrixMode(GL_PROJECTION);
@@ -140,12 +143,12 @@ void showLoseScreen() {
 void InitLightSource() {
 	//print level2 value 
 	printf("level2: %d\n", level2);
-	float ambientRedIntensity = level2? 0.0 : 0.3;
-	float ambientBlueIntensity = level2 ? 0.7 : 0.0;
+	float ambientGreenIntensity = level2? 1.0 : 0.2;
+	float ambientBlueIntensity = level2 ? 0.0 : 0.0;
+	float ambientRedIntensity = level2 ? 0.5 : 0.0;
 
-	// Set global ambient light (affects all objects)
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	GLfloat lmodel_ambient[] = { ambientRedIntensity, 0.0f, ambientBlueIntensity, 1.0f }; // Ambient light for the entire scene
+	
+	GLfloat lmodel_ambient[] = { ambientRedIntensity,ambientGreenIntensity, ambientBlueIntensity, 1.0f }; // Ambient light for the entire scene
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
 
 	// Define Light source 0 diffuse light as red
@@ -153,16 +156,16 @@ void InitLightSource() {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0Diffuse);
 
 	// Define Light source 0 ambient light as a subtle red
-	GLfloat l0Ambient[] = {ambientRedIntensity, 0.0f,ambientBlueIntensity, 1.0f }; // Subtle red ambient light
+	GLfloat l0Ambient[] = { ambientRedIntensity,ambientGreenIntensity,ambientBlueIntensity, 1.0f }; // Subtle red ambient light
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0Ambient);
 
 
 	// Set light source 0 position in World Space (adjust as needed)
-	GLfloat l0Position[] = { 0.0f, 800.0f, 0.0f, 1.0f }; // Position of the light
+	GLfloat l0Position[] = { 0.0f, 800.0f, 0.0f, 0.0f }; // Position of the light
 	glLightfv(GL_LIGHT0, GL_POSITION, l0Position);
 
 	//increase red intensity
-	GLfloat Intensity[] = { ambientRedIntensity, 0.0, ambientBlueIntensity, 1.0f };
+	GLfloat Intensity[] = { ambientRedIntensity,ambientGreenIntensity, ambientBlueIntensity, 1.0f };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, Intensity);
 
 	GLfloat l0Direction[] = { 0.0f, 0.0f, 0.0f }; // No direction for a point light
@@ -171,27 +174,27 @@ void InitLightSource() {
 
 void InitSpotLightSource() {
 	// Define Light source 1 (Green high-intensity spotlight)
-	GLfloat l1Diffuse[] = { 0.0f, 1.0f, 0.0f, 1.0f }; // Green diffuse light
-	GLfloat l1Specular[] = { 0.0f, 1.0f, 0.0f, 1.0f }; // Green specular light
-	GLfloat l1Position[] = { car_x, 4.0f, car_z, 1.0f }; // Position at (0, 15, 0)
-
+	GLfloat l1Diffuse[] = { 0.0f, 0.0f, 1.0f, 1.0f }; // Green diffuse light
+	GLfloat l1Specular[] = { 0.0f, 0.0f, 1.0f, 1.0f }; // Green specular light
+	
+	GLfloat l1Position[] = { car_x, 3.0f, car_z, 1.0f }; // Position at (car_x, 2.0, car_z)
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, l1Diffuse);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, l1Specular);
 	glLightfv(GL_LIGHT1, GL_POSITION, l1Position);
 
-	//increase red intensity
-	GLfloat Intensity[] = { 0, 1.0, 0, 1.0f };
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, Intensity);
+	GLfloat l1Intensity[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, l1Intensity);
 
 	// Set spotlight properties for Light source 1 (GL_LIGHT1)
-	GLfloat spotDirection[] = { 0.0f, -1.0f, 0.0f }; // Spotlight direction (pointing downwards)
-	GLfloat spotExponent = 120.0f; // Adjust spotlight exponent for intensity
-	GLfloat spotCutoff = 45.0f; // Set the cutoff angle to 180 degrees for a circular shape
+	GLfloat spotDirection[] = { 0.0f, -1.0f, -1.0f }; // Spotlight direction (pointing downwards)
+	GLfloat spotExponent = 30.0f; // Adjust spotlight exponent for intensity
+	GLfloat spotCutoff = 15.0f; // Set the cutoff angle to 25 degrees for a focused spotlight
 
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spotDirection);
 	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, spotExponent);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, spotCutoff);
 }
+
 
 
 
@@ -475,7 +478,7 @@ void myDisplay(void)
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 		glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
 
-		renderRoad(240);
+		renderRoad(120);
 		renderCar();
 		renderBarriers();
 		collideWithCoins(&score);
