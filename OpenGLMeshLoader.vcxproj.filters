@@ -84,6 +84,9 @@
     <ClCompile Include="Door.cpp">
       <Filter>Source Files\Game Models</Filter>
     </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>Source Files\Game Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -126,6 +129,9 @@
       <Filter>Header Files\Game Modules</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
+      <Filter>Header Files\Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
       <Filter>Header Files\Game Modules</Filter>
     </ClInclude>
   </ItemGroup>

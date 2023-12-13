@@ -14,6 +14,7 @@
 #include "Barrier.h"
 #include "Coin.h"
 #include "Door.h"
+#include "Human.h";
 #include <cmath>
 #include <string>
 #pragma comment(lib, "winmm.lib")
@@ -44,6 +45,18 @@ Vector3f Up(0, 1, 0);
 
 Camera camera;
 
+int remainingTime = 10;
+
+void updateTimer(int value) {
+	if (remainingTime > 0) {
+		remainingTime -= 1; // Decrement the remaining time by one second
+	}
+	else {
+		remainingTime = 10;
+	}
+	glutPostRedisplay();
+	glutTimerFunc(1000, updateTimer, 0); 
+}
 void showStartScreen() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -162,7 +175,7 @@ void showLoseScreen() {
 	glPushMatrix();
 	glLoadIdentity();
 
-	std::string loseText = "You Lost! Score: " + std::to_string(score);
+	std::string loseText = human_collected ? "You Killed Don Raymond :0" : "You Lost! Score: " + std::to_string(score);
 	//const char* loseText = "You Lost";
 	glColor3f(1.0, 1.0, 0.0); // Yellow text color
 	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)loseText.c_str());
@@ -171,6 +184,14 @@ void showLoseScreen() {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
 	}
 
+	if(human_collected){
+	glColor3f(0,0,0);
+	glLineWidth(8.0);
+	glBegin(GL_LINES);
+	glVertex2f(0, 580);
+	glVertex2f(100, 720);
+	glEnd();
+	}
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -192,7 +213,7 @@ void showLoseScreen() {
 //=======================================================================
 void InitLightSource() {
 	//print level2 value 
-	printf("level2: %d\n", level2);
+	//printf("level2: %d\n", level2);
 	float ambientGreenIntensity = level2? 1.0 : 0.2;
 	float ambientBlueIntensity = level2 ? 0.0 : 0.0;
 	float ambientRedIntensity = level2 ? 0.5 : 0.0;
@@ -475,6 +496,7 @@ void LoadAssets() {
 	// Loading texture files
 	loadSceneTextures();
 	loadDoorTexture();
+	loadHuman();
 }
 void drawAxes(float length) {
 	glBegin(GL_LINES);
@@ -545,14 +567,17 @@ void myDisplay(void)
 		renderBarriers();
 		collideWithCoins(&score);
 		renderCoins();
-		renderDoor();
 		collideWithStars(&score);
 		renderStars();
 		renderCones();
 		collideWithCup();
 		renderCup();
-		collidWithDoor(score);
+		renderDoor();
+		collidWithDoor(score);		
 
+		collideWithHuman();
+		renderHuman(remainingTime);
+		
 		//drawAxes(30);
 		glColor3f(1, 1, 1);
 		renderSkyBox();
@@ -594,6 +619,7 @@ void main(int argc, char** argv)
 
 	glutReshapeFunc(reshape);
 
+	glutTimerFunc(1000, updateTimer, 0);
 	init();
 
 	LoadAssets();

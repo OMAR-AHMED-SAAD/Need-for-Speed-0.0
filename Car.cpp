@@ -6,6 +6,7 @@
 #include "Model_3DS.h"
 #include "glut.h"
 #include "Door.h"
+#include "Human.h";
 #include <algorithm>
 #include <math.h>
 Model_3DS model_car;
@@ -193,8 +194,17 @@ void collidWithDoor(int score) {
 		openDoor = 0;
 		openDoorAngle = 0;
 	}
+}
 
+void collideWithHuman() {
+	float dist = euclideanDistance(car_x, car_y, car_z, human_coords[random_number][0], human_coords[random_number][1], human_coords[random_number][2]);
+	//float dist = euclideanDistance(car_x, car_y, car_z, 0, 0, -10);
 
-
+	printf("Human : %f\n", dist);
+	if (dist <= 1.5 && !human_collected) {
+		PlaySound(TEXT("sounds/humanCollide.wav"), NULL, SND_ASYNC | SND_FILENAME);
+		human_collected = true;
+		currentGameState = LOSE;
+	}
 }
 

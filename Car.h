@@ -32,4 +32,5 @@ bool collideWithConeZ();
 bool collideWithConeX();
 void collideWithCup();
 void collidWithDoor(int score);
+void collideWithHuman();
 #endif // CAR_H
