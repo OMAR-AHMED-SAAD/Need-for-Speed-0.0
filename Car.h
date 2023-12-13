@@ -14,6 +14,7 @@ static bool goLevel2 = true;
 extern bool level2;
 //enum for tracking game state
 enum GameState {
+    START,
     PLAYING,
     WIN,
     LOSE

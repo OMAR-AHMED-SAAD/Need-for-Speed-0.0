@@ -29,7 +29,7 @@ char title[] = "Need for speed 0.0";
 
 // Instance Variable
 int score = 0;
-GameState currentGameState = PLAYING;
+GameState currentGameState = START;
 // 3D Projection Options
 GLdouble fovy = 45.0;
 GLdouble aspectRatio = (GLdouble)WIDTH / (GLdouble)HEIGHT;
@@ -43,6 +43,56 @@ Vector3f Up(0, 1, 0);
 
 
 Camera camera;
+
+void showStartScreen() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Disable depth test to ensure the win screen appears on top
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, WIDTH, 0, HEIGHT);
+
+	// Initialize modelview matrix
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+
+	char* rules = "You need to collect at least 1 coin to go to level 2. Otherwise, you LOSE!!";
+
+	// Display the text
+	glColor3f(1.0, 1.0, 0.0); // Yellow text color
+	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)rules);
+	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
+	for (const char* c = rules; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+	}
+
+	char* goToLevel1 = "Press b to continue.";
+	glColor3f(1.0, 1.0, 0.0); // Yellow text color
+	textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)goToLevel1);
+	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2-50);
+	for (const char* c = goToLevel1; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+	}
+
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glEnable(GL_DEPTH_TEST);
+
+}
 void showWinScreen() {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -66,15 +116,15 @@ void showWinScreen() {
 	glLoadIdentity();
 
 	
-std::string winText = "Congratulations! You Win! Score: " + std::to_string(score);
+	std::string winText = "Congratulations! You Win! Score: " + std::to_string(score);
 
-// Display the text
-glColor3f(1.0, 1.0, 0.0); // Yellow text color
-int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)winText.c_str());
-glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
-for (const char* c = winText.c_str(); *c != '\0'; c++) {
-    glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
-}
+	// Display the text
+	glColor3f(1.0, 1.0, 0.0); // Yellow text color
+	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)winText.c_str());
+	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
+	for (const char* c = winText.c_str(); *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+	}
 
 	
 	glMatrixMode(GL_PROJECTION);
@@ -112,12 +162,12 @@ void showLoseScreen() {
 	glPushMatrix();
 	glLoadIdentity();
 
-
-	const char* loseText = "You Lost";
+	std::string loseText = "You Lost! Score: " + std::to_string(score);
+	//const char* loseText = "You Lost";
 	glColor3f(1.0, 1.0, 0.0); // Yellow text color
-	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)loseText);
+	int textWidth = glutBitmapLength(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)loseText.c_str());
 	glRasterPos2i(WIDTH / 2 - textWidth / 2, HEIGHT / 2);
-	for (const char* c = loseText; *c != '\0'; c++) {
+	for (const char* c = loseText.c_str(); *c != '\0'; c++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
 	}
 
@@ -281,43 +331,49 @@ void updateCamera() {
 bool isFirst = false;
 void keyboard(unsigned char key, int x, int y) {
 	float d = 1.0;
-	
-	switch (key) {
-	case 'w':
-		camera.moveY(d);
-		break;
-	case 's':
-		camera.moveY(-d);
-		break;
-	case 'a':
-		camera.moveX(d);
-		break;
-	case 'd':
-		camera.moveX(-d);
-		break;
-	case 'q':
-		camera.moveZ(d);
-		break;
-	case 'e':
-		camera.moveZ(-d);
-		break;
-	case 'i':
-		camera.rotateX(d);
-		break;
-	case 'k':
-		camera.rotateX(-d);
-		break;
-	case 'j':
-		camera.rotateY(d);
-		break;
-	case 'l':
-		camera.rotateY(-d);
-		break;
-
-	case GLUT_KEY_ESCAPE:
-		exit(EXIT_SUCCESS);
-		break;
+	switch(currentGameState) {
+		case START:
+			if(key == 'b')
+				currentGameState = PLAYING;
+			break;
+		case PLAYING:
+			switch (key) {
+				case 'w':
+					camera.moveY(d);
+					break;
+				case 's':
+					camera.moveY(-d);
+					break;
+				case 'a':
+					camera.moveX(d);
+					break;
+				case 'd':
+					camera.moveX(-d);
+					break;
+				case 'q':
+					camera.moveZ(d);
+					break;
+				case 'e':
+					camera.moveZ(-d);
+					break;
+				case 'i':
+					camera.rotateX(d);
+					break;
+				case 'k':
+					camera.rotateX(-d);
+					break;
+				case 'j':
+					camera.rotateY(d);
+					break;
+				case 'l':
+					camera.rotateY(-d);
+					break;
+				case GLUT_KEY_ESCAPE:
+					exit(EXIT_SUCCESS);
+					break;
+				}
 	}
+	
 	
 	/*GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);*/
@@ -327,8 +383,10 @@ void keyboard(unsigned char key, int x, int y) {
 //=======================================================================
 // Special Function - Updated for Camera Control
 //=======================================================================
-void special(int key, int x, int y) {	
-	moveCar(key, camera, isFirst);
+void special(int key, int x, int y) {
+	if (currentGameState == PLAYING) {
+		moveCar(key, camera, isFirst);
+	}
 	glutPostRedisplay();
 }
 
@@ -361,6 +419,8 @@ void mouseMotion(int x, int y) {
 // Mouse Function
 //=======================================================================
 void mouse(int button, int state, int x, int y) {
+	if(currentGameState != PLAYING)
+		return;
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) 
 		isFirst = true;
 	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) 
@@ -473,7 +533,9 @@ void myDisplay(void)
 	GLfloat lightPosition[] = { 0.0f, 100.0f, 0.0f, 0.0f };
 	switch (currentGameState) {
 		// Normal game rendering
-		
+	case START:
+		showStartScreen();
+		break;
 	case PLAYING:
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 		glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
