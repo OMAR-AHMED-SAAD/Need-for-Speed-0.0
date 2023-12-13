@@ -437,7 +437,7 @@ void drawAxes(float length) {
 	glEnd();
 }
 
-void print(){
+void printScore(){
 	glPushAttrib(GL_CURRENT_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -450,7 +450,7 @@ void print(){
 
 	char scoreString[20];
 	sprintf(scoreString, "Score: %d", score);
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(0.0,1.0, 0.0);
 	glRasterPos2i(720, 580);
 	for (char* c = scoreString; *c != '\0'; c++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
@@ -491,10 +491,10 @@ void myDisplay(void)
 		renderCup();
 		collidWithDoor(score);
 
-		drawAxes(30);
+		//drawAxes(30);
 		glColor3f(1, 1, 1);
 		renderSkyBox();
-		print();
+		printScore();
 		break;
 	case WIN:
 		showWinScreen();
