@@ -61,13 +61,13 @@ void moveCar(unsigned char key, Camera& camera, bool isFirst) {
 			car_z += speed_car;
 		}
 		break;
-	case GLUT_KEY_DOWN:
-		car_z += speed_car; // Move backward
-		if (collideWithBarrierZ() || collideWithConeZ())
-		{
-			car_z -= speed_car;
-		}
-		break;
+	//case GLUT_KEY_DOWN:
+	//	car_z += speed_car; // Move backward
+	//	if (collideWithBarrierZ() || collideWithConeZ())
+	//	{
+	//		car_z -= speed_car;
+	//	}
+	//	break;
 	}
 	if (isFirst) {
 		camera = Camera(Vector3f(car_x, car_y + 2, car_z + 1.5), Vector3f(car_x, car_y, car_z - 5), Vector3f(0, 1, 0));

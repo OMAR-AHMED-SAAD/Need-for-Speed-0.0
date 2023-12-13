@@ -17,7 +17,7 @@ void renderCup() {
     glPushMatrix();    
     glTranslatef(cup_coords[0], cup_coords[1], cup_coords[2]);
     glRotated(90, 0, 1, 0);
-    glScaled(3, 3, 3);
+    glScaled(4, 4, 4);
     model_cup.Draw();
     glPopMatrix();
 }
