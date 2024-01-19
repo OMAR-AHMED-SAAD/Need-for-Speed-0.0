@@ -27,7 +27,16 @@ This project was developed as part of the DMET 502 Computer Graphics course duri
 Instructions for installing the game, including any prerequisites or dependencies.
 
 ## Usage
-Guidelines on how to play the game, including control mappings and tips for navigation.
+"Need for Speed 0.0" is designed with intuitive controls for a seamless gaming experience. 
+- **Moving the Car:**
+  - **Up Key:** Moves the car forward.
+  - **Right Key:** Steers the car to the right.
+  - **Left Key:** Steers the car to the left.
+Navigate through the levels, avoid obstacles, collect items, and strive for the highest score!
+
+## Bonus Feature
+In Level 2, we've introduced an exciting new challenge. A character appears randomly on the road at different intervals. This character will pop up in random positions, adding an element of unpredictability to the game. The twist? If your car hits this character, you immediately lose the game. This feature demands heightened awareness and quick reflexes, offering an extra layer of challenge and excitement for players.
+
 
 ## Contributors
 
