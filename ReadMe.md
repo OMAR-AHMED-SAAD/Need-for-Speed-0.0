@@ -6,6 +6,7 @@
 - [Development Environment](#development-environment)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Bonus Feature](#bonus-feature)
 - [Contributing](#contributing)
 
 ## Project Description
