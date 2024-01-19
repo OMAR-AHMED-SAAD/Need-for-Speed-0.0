@@ -7,8 +7,6 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Project Description
 "Need for Speed 0.0" is an innovative and immersive game where players navigate a car on a straight road with the primary goal of dodging obstacles, collecting items, and reaching the target. The game is designed with engaging graphics and interactive elements, making it an exciting experience for gamers of all ages.
